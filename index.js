@@ -16,7 +16,7 @@ let citySearch = document.querySelector('.weather_search');
 
 // to get the date and time
 const getDateTime = (dt) => {
-  const curDate = new Date(dt * 1000); // Convert seconds to milliseconds
+  const curDate = new Date(dt * 1000); 
   console.log(curDate);
   const options = {
     weekday: "long",
@@ -25,7 +25,7 @@ const getDateTime = (dt) => {
     day: "numeric",
     hour: "numeric",
     minute: "numeric",
-  };    // what we want to display
+  };   
 
   const formatter = new Intl.DateTimeFormat("en-US", options);    // API
   return formattedDate = formatter.format(curDate);
@@ -40,8 +40,8 @@ let city = "bharuch";   // by default
 citySearch.addEventListener('submit', (e) => {
   e.preventDefault();
   let cityName = document.querySelector('.city_name');
-  city = cityName.value;  // update the value as per user has entered
-  getWeatherData();   // now fetch data for input
+  city = cityName.value;  
+  getWeatherData();  
   cityName.value = "";
 });
 
@@ -57,20 +57,19 @@ const getCountryName = (code) => {
 //define the getWeather function here
 const getWeatherData = async () => {    //mkae async for API
   const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=dd98e3ff8d84f775ccb6790cdc6e4f76&units=metric`;
-   // q = query
+  
   try {
     const res = await fetch(weatherUrl);
     const data = await res.json();
 
-    // console.log(data);
     const {main, name, weather, wind, sys, dt} = data;
 
     cityName.innerHTML = `${name}, ${getCountryName(sys.country)}`;
 
     dateTime.innerHTML = getDateTime(dt);
 
-    w_temperature.innerHTML = `${main.temp}&deg;C`;   // cover this html tag with `` in .js
-    w_minTem.innerHTML = `Min: ${main.temp_min.toFixed()}&deg;C`;   // no decimal points
+    w_temperature.innerHTML = `${main.temp}&deg;C`;   
+    w_minTem.innerHTML = `Min: ${main.temp_min.toFixed()}&deg;C`;   
     w_maxTem.innerHTML = `Max: ${main.temp_max.toFixed()}&deg;C`;   
     
     w_forecast.innerHTML = weather[0].main;
@@ -92,6 +91,3 @@ const getWeatherData = async () => {    //mkae async for API
 // getWeatherData();
 
 window.addEventListener("load", getWeatherData());
-
-
-// api key: dd98e3ff8d84f775ccb6790cdc6e4f76
